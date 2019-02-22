@@ -1,9 +1,28 @@
+<br><br>
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @category.name %>
-</p>
+<h4>Ingresar un nuevo producto en la categoría <strong><%= @category.name %></strong></h4><br>
+
+
+<%= form_with( model: [@category, @product], local: true) do |f| %>
+	<%= f.hidden_field :category_id, value: @category.id %>
+
+	<%= f.label :nombre %>
+	<%= f.text_field :name %>
+
+	<%= f.label :Precio %>
+	<%= f.number_field :price %><br><br>
+
+	<%= f.submit "Ingresar" %>
+<% end %><br><br>
+
+
+<h4>Productos / precios</h4>
+<ul>
+<% @category.products.each do |product| %>
+	<li><%= product.name %> - precio: $<%= product.price %> | <%= link_to 'Borrar', category_product_path(@category, product), method: :delete, :class => "bold" %><br>
+<% end %><br>
+</ul>
 
 <%= link_to 'Edit', edit_category_path(@category) %> |
 <%= link_to 'Back', categories_path %>
